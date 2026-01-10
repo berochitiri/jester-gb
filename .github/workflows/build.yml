@@ -1,0 +1,84 @@
+name: Build Release
+
+on:
+  push:
+    branches: [ "main" ]
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential cmake libpulse-dev
+      
+      - name: Build
+        run: |
+          mkdir build && cd build
+          cmake .. -DCMAKE_BUILD_TYPE=Release
+          make -j$(nproc)
+          strip jester-gb
+      
+      - name: Package
+        run: |
+          mkdir -p release/jester-gb-linux-x64
+          cp build/jester-gb release/jester-gb-linux-x64/
+          cp README.md release/jester-gb-linux-x64/
+          mkdir release/jester-gb-linux-x64/roms
+          cd release && tar -czvf jester-gb-linux-x64.tar.gz jester-gb-linux-x64
+      
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: jester-gb-linux-x64
+          path: release/jester-gb-linux-x64.tar.gz
+
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup MSVC
+        uses: microsoft/setup-msbuild@v2
+      
+      - name: Build
+        run: |
+          mkdir build
+          cd build
+          cmake .. -G "Visual Studio 17 2022" -A x64
+          cmake --build . --config Release
+      
+      - name: Package
+        run: |
+          mkdir release\jester-gb-windows-x64
+          copy build\Release\jester-gb.exe release\jester-gb-windows-x64\
+          copy README.md release\jester-gb-windows-x64\
+          mkdir release\jester-gb-windows-x64\roms
+          Compress-Archive -Path release\jester-gb-windows-x64 -DestinationPath release\jester-gb-windows-x64.zip
+      
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: jester-gb-windows-x64
+          path: release/jester-gb-windows-x64.zip
+
+  release:
+    needs: [build-linux, build-windows]
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/')
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+      
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            jester-gb-linux-x64/jester-gb-linux-x64.tar.gz
+            jester-gb-windows-x64/jester-gb-windows-x64.zip
