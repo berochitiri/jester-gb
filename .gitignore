@@ -1,0 +1,27 @@
+# Build directory
+build/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Compiled objects
+*.o
+*.a
+*.so
+
+# ROM files (keep in roms/)
+*.gb
+*.gbc
+*.sav
+
+# OS
+.DS_Store
+Thumbs.db
+.cache/
+release/
+build-windows/
+build/
+build-mingw/

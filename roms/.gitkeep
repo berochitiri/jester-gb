@@ -1,0 +1,5 @@
+# Ignore ROM files
+*.gb
+*.gbc
+*.sav
+!.gitkeep

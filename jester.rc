@@ -1,0 +1,4 @@
+// Windows resource file for jester-gb
+// embeds the application icon
+
+IDI_ICON1 ICON "jester.ico"
