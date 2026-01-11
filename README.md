@@ -69,7 +69,7 @@ if you prefer pain or want to hack on the code.
 
 **requirements:**
 
-- a terminal that isn't garbage (utf-8 + truecolor support)
+- a terminal that isn't garbage (utf-8 + truecolor support) // (windows terminal on windows)
 - cmake & a c++ compiler
 
 **linux (arch):**
