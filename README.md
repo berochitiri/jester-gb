@@ -100,6 +100,17 @@ cmake --build . --config Release
 
 ```
 
+**macos:**
+
+```
+# install pulseaudio if you want audio
+brew install pulseaudio
+mkdir build && cd build
+cmake ..
+cmake --build . --config Release
+
+```
+
 ### 🎮 windows notes
 
 windows builds work great! audio + 60fps fully supported.
