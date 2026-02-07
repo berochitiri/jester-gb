@@ -102,7 +102,7 @@ cmake --build . --config Release
 
 **macos:**
 
-```
+```bash
 # install pulseaudio if you want audio
 brew install pulseaudio
 mkdir build && cd build
