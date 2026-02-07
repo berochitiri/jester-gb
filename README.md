@@ -176,7 +176,7 @@ if this emulator crashes and burns your cpu, that's a skill issue.
 
 ### 🤝 contributing
 
-PRs welcome. macos support needed (i don't own a mac).
+PRs welcome. (big thanks to aceiii for testing on mac 😄)
 
 <div align="center">
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%"/>
